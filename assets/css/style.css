@@ -1,0 +1,46 @@
+body {
+    background-image: url(../images/Fuo3Gw.jpg);
+    background-repeat: no-repeat;
+    background-position: inherit;
+    background-position-y: 30%;
+    background-size: 100%;
+    border: 3px solid whitesmoke;
+    margin: 10% 25% 10% 25%;
+    color: whitesmoke;
+}
+
+
+
+
+
+h2 {
+    font-family: 'Cinzel', serif;
+    font-weight: lighter;
+    font-size: 28pt;
+    margin-left: 20px;  
+}
+
+h3 {
+    font-size: 22pt;
+    font-weight: lighter;
+    margin-left: 25px;
+}
+
+ul {
+    list-style-type: none;
+    margin-left: 45px;
+}
+
+li {
+    padding: 15px;
+    font-size: 18pt;
+}
+
+.answer:hover {
+    font-weight: bold;
+    background-color: rgba(0, 221, 0, 0.315);
+}
+
+.answer:active {
+    opacity: .2;
+}
