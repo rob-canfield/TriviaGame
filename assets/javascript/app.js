@@ -5,9 +5,11 @@
 
 var answered = false;
 var unanswered = 0
-var correctAnswers = 0
-var incorrectAnswers = 0
-var timeRemaining = 15
+var correct = 0
+var incorrect = 0
+var intervalId;
+var seconds = 16
+var index = 0
 
 var ootTrivia = [
     {
@@ -56,7 +58,7 @@ var ootTrivia = [
         correct : 1
     }, 
     {
-        question : "1What was the name of the Graveyard keeper?",
+        question : "What was the name of the Graveyard keeper?",
         answers : ["Milo", "Ingo", "Grog", "Dampé"],
         correct : 4
     }
@@ -64,20 +66,64 @@ var ootTrivia = [
 
 
 
-function displayQuestion(index) {
-$("#question").append(ootTrivia[index].question);
-$("#choice1").append(ootTrivia[index].answers[0]);
-$("#choice2").append(ootTrivia[index].answers[1]);
-$("#choice3").append(ootTrivia[index].answers[2]);
-$("#choice4").append(ootTrivia[index].answers[3]);
+function displayQuestion() {
+$("#question").html(ootTrivia[index].question);
+$("#choice1").html(ootTrivia[index].answers[0]);
+$("#choice2").html(ootTrivia[index].answers[1]);
+$("#choice3").html(ootTrivia[index].answers[2]);
+$("#choice4").html(ootTrivia[index].answers[3]);
+commence();
+
+var answerCorrect = ootTrivia[index].answers[ootTrivia[index].correct];
+$(".answer").attr("data-correct", answerCorrect);
 }
 
-displayQuestion(0);
+function commence() {
+    intervalId = setInterval(decrement, 1000);
+}
+
+function decrement() {
+    seconds--;
+    $("#time-remaining").html("<h2>Time remaining: " + seconds + "</h2>");
+}
+
+function stop() {
+    clearInterval(intervalId);
+}
+
+function incrementGame() {
+    index ++;
+    seconds = 16;
+    stop();
+    displayQuestion();
+}
+
+displayQuestion();
 
 
 //user clicks one choice
 
+$(".answer").on('click', function(){
+    
+    var answerSelected = $(this).text();
+    console.log(answerSelected);
 
+    var correctAnswer = $(this).attr('data-correct');
+    console.log(correctAnswer);
+
+ if (answerSelected === correctAnswer){
+     correct++;
+     console.log("correct: " + correct);
+
+
+ } else {
+     incorrect++;
+     console.log(incorrect);
+ }
+    incrementGame();
+
+    
+})
 
     // if answer is correct, stop timer, display "correct" on new timer 5 seconds, proceed to nect question
 
