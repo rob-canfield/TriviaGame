@@ -61,6 +61,7 @@ var ootTrivia = [
 
 function displayQuestion() {
 
+    //displays each question and eaach answer selection in browser
     $("#question").html(ootTrivia[index].question);
     $("#choice1").html(ootTrivia[index].answers[0]);
     $("#choice2").html(ootTrivia[index].answers[1]);
@@ -68,17 +69,18 @@ function displayQuestion() {
     $("#choice4").html(ootTrivia[index].answers[3]);
     commence();
 
-    var answerCorrect = ootTrivia[index].answers[ootTrivia[index].correct];
-    $(".answer").attr("data-correct", answerCorrect);
+    //assigns attribute to answer selections, labeling all of them witht he correct answer
+    var answer = ootTrivia[index].answers[ootTrivia[index].correct];
+    $(".answer").attr("data-correct", answer);
 }
 
-var answerCorrect = ootTrivia[index].answers[ootTrivia[index].correct];
-$(".answer").attr("data-correct", answerCorrect);
 
+function displayEndResults() {
 
-function displayResults() {
+    //removes trivia game and shows end of game results
     $("#trivia").remove();
     $("#results").html("<h1>CORRECT: " + correct + "<h1>INCORRECT: " + incorrect + "</h1>");
+
 }
 
 
@@ -115,33 +117,9 @@ $(".answer").on('click', function(){
     var correctAnswer = $(this).attr('data-correct');
     console.log(correctAnswer);
 
-    
-    if (index < 9){
-
-        if (answerSelected === correctAnswer){
-            correct++;
-            console.log("correct: " + correct);
-
-
-        } else {
-            incorrect++;
-            console.log("incorrect: " + incorrect);
-        }
-
-        incrementGame(); 
-    } else {
-
-        displayResults();
-
-    }
+    if (answerSelected === correctAnswer)
     
 })
 
-    // if answer is correct, stop timer, display "correct" on new timer 5 seconds, proceed to nect question
-
-    //if answer is incorrect, stop timer, display "incorrect" and the correct answer on new timer 5 seconds, proceed to nect question
-
-    //if time runs out, display "time's up" on new timer 5 seconds, proceed to nect question
-
-
+  
 
