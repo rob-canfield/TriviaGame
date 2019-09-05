@@ -3,8 +3,9 @@ var unanswered = 0
 var correct = 0
 var incorrect = 0
 var intervalId;
-var seconds = 16
+var seconds = 5
 var index = 0
+var trivia;
 
 var ootTrivia = [
     {
@@ -61,12 +62,15 @@ var ootTrivia = [
 
 function displayQuestion() {
 
+    $("#results").html("");
+
     //displays each question and eaach answer selection in browser
     $("#question").html(ootTrivia[index].question);
     $("#choice1").html(ootTrivia[index].answers[0]);
     $("#choice2").html(ootTrivia[index].answers[1]);
     $("#choice3").html(ootTrivia[index].answers[2]);
     $("#choice4").html(ootTrivia[index].answers[3]);
+
     commence();
 
     //assigns attribute to answer selections, labeling all of them witht he correct answer
@@ -74,15 +78,17 @@ function displayQuestion() {
     $(".answer").attr("data-correct", answer);
 }
 
-
 function displayEndResults() {
 
     //removes trivia game and shows end of game results
-    $("#trivia").remove();
-    $("#results").html("<h1>CORRECT: " + correct + "<h1>INCORRECT: " + incorrect + "</h1>");
+    trivia = $("#trivia").detach();
 
+    $("#results").html("<h1>CORRECT: " + correct + "</h1><h1>INCORRECT: " + incorrect + "</h1>");
+    $("#results").append('<img src="https://media0.giphy.com/media/TRtXbqJpUnFPq/giphy.gif?cid=790b761180ccc98235cc61ad0b0d03f84b7b004a6b304ded&rid=giphy.gif" style="width: 50%">')
+    $("#results").append('<button>Try again?</button>').attr('id', "try-again")
+
+  
 }
-
 
 function commence() {
     intervalId = setInterval(decrement, 1000);
@@ -90,7 +96,7 @@ function commence() {
 
 function decrement() {
     seconds--;
-    $("#time-remaining").html("<h2>Time remaining: " + seconds + "</h2>");
+    $("#time-remaining").html("<h2>Time: " + seconds + "</h2>");
 }
 
 function stop() {
@@ -104,10 +110,17 @@ function incrementGame() {
     displayQuestion();
 }
 
+function userCorrect (){
+    correct++;
+}
+
+function userIncorrect (){
+    incorrect++;
+}
+
 displayQuestion();
 
 
-//user clicks one choice
 
 $(".answer").on('click', function(){
     
@@ -117,9 +130,41 @@ $(".answer").on('click', function(){
     var correctAnswer = $(this).attr('data-correct');
     console.log(correctAnswer);
 
-    if (answerSelected === correctAnswer)
     
+    if (answerSelected === correctAnswer){
+        userCorrect();
+    } else {
+        userIncorrect();
+    }
+
+    
+
+    if (index < 9){
+        incrementGame();
+    } else {
+
+        displayEndResults();
+
+
+        $("#try-again").on('click', function (){
+            correct = 0;
+            incorrect = 0;
+            index = 0;
+            displayQuestion();
+            $("#results").html("");
+            trivia.append("body");
+        })
+       
+    }
+
+
 })
+
+
+
+
+
+
 
   
 
